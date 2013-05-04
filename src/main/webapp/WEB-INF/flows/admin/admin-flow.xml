@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<var name="assetMappingTableController"
+		class="de.fisch3r.springdemo.jsf.controller.AssetMappingTableController" />
+
+	<on-start>
+		<evaluate
+			expression="assetMappingTableController.setAssetMappings(assetMappingService.fetchAssetMappings())" />
+	</on-start>
+
+	<view-state id="assetmapping">
+		<var name="newAssetMapping" class="de.fisch3r.springdemo.jsf.domain.AssetMapping" />
+
+		<transition on="addNewAssetMapping" to="assetmapping">
+			<evaluate
+				expression="assetMappingTableController.assetMappings.add(newAssetMapping)" />
+		</transition>
+
+		<transition on="removeAssetMapping" to="assetmapping">
+			<evaluate
+				expression="assetMappingTableController.assetMappings.remove(assetMappingTableController.selectedAssetMapping)" />
+		</transition>
+
+		<transition on="editAssetMapping" to="editmapping" />
+
+		<transition on="createAssetMapping" to="createmapping" />
+
+		<transition on="saveAssetMappings" to="assetmapping">
+			<evaluate
+				expression="assetMappingService.setAssetMappings(assetMappingTableController.assetMappings)" />
+			<evaluate
+				expression="assetMappingTableController.setAssetMappings(assetMappingService.fetchAssetMappings())" />
+		</transition>
+	</view-state>
+
+	<view-state id="editmapping" view="mappingform.xhtml">
+		<on-render>
+			<evaluate expression="assetMappingTableController.getSelectedAssetMapping()"
+				result="flowScope.assetMapping" />
+		</on-render>
+		<transition on="saveAssetMapping" to="assetmapping" />
+		<transition on="cancel" to="assetmapping" />
+	</view-state>
+
+	<view-state id="createmapping" view="mappingform.xhtml">
+		<var name="assetMapping" class="de.fisch3r.springdemo.jsf.domain.AssetMapping" />
+		<transition on="saveAssetMapping" to="assetmapping">
+			<evaluate
+				expression="assetMappingTableController.assetMappings.add(assetMapping)" />
+		</transition>
+		<transition on="cancel" to="assetmapping" />
+	</view-state>
+
+</flow>
