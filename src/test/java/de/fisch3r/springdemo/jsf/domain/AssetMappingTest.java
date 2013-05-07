@@ -3,7 +3,7 @@ package de.fisch3r.springdemo.jsf.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;

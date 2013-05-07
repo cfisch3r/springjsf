@@ -4,13 +4,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import de.fisch3r.springdemo.jsf.domain.AssetMapping;
 
@@ -27,7 +25,7 @@ public class AssetMappingServiceTest {
 		}
 	};
 	
-	@BeforeTest
+	@Before
 	public void setUp() {
 		sut = new SimpleAssetMappingService();
 	}

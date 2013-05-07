@@ -3,16 +3,17 @@ package de.fisch3r.springdemo.jsf.service;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.Test;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.fisch3r.springdemo.jsf.domain.AssetMapping;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="classpath:/spring/services.xml")
-public class AssetMappingServiceIT extends AbstractTestNGSpringContextTests {
+public class AssetMappingServiceIT {
 	
 	@Autowired
 	private AssetMappingService sut;
@@ -22,13 +23,13 @@ public class AssetMappingServiceIT extends AbstractTestNGSpringContextTests {
 		sut.setAssetMappings(new HashSet<AssetMapping>());		
 	}
 	
-	@Test(expectedExceptions=org.hibernate.validator.method.MethodConstraintViolationException.class)
+	@Test(expected=org.hibernate.validator.method.MethodConstraintViolationException.class)
 	public void settingNullAsAssetMappingsShouldThrowException() {
 		sut.setAssetMappings(null);
 	}
 	
 	
-	@Test(expectedExceptions=org.hibernate.validator.method.MethodConstraintViolationException.class)
+	@Test(expected=org.hibernate.validator.method.MethodConstraintViolationException.class)
 	public void setInvalidAssetMappingsShouldThrowException() {
 		Set<AssetMapping> assetMappings = new HashSet<AssetMapping>();
 		assetMappings.add(new AssetMapping("", ""));
